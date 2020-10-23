@@ -18,5 +18,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('comments/{greeting}', 'GreetingController@show');
-Route::get('comments/freeword/{freeword}', 'GreetingController@free');
+Route::group(['prefix' => 'comments'], function(){
+    Route::get('/random',[
+        'uses' => 'GreetingController@random',
+        'as' => 'comments.random'
+    ]);
+    Route::get('/{greeting}',[
+        'uses' => 'GreetingController@show',
+        'as' => 'comments.{greeting}'
+    ]);
+    Route::get('/freeword/{freeword}',[
+        'uses' => 'GreetingController@free',
+        'as' => 'comments.freeword.{freeword}'
+    ]);
+});

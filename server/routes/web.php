@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GreetingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::group(['prefix' => 'comments'], function(){
+    Route::get('/random',[
+        'uses' => 'GreetingController@random',
+        'as' => 'comments.random'
+    ]);
+    Route::get('/{greeting}',[
+        'uses' => 'GreetingController@show',
+        'as' => 'comments.{greeting}'
+    ]);
+    Route::get('/freeword/{freeword}',[
+        'uses' => 'GreetingController@free',
+        'as' => 'comments.freeword.{freeword}'
+    ]);
 });
